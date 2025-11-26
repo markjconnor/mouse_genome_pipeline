@@ -1,0 +1,30 @@
+- name: Install basic tools
+  ansible.builtin.dnf:
+    name:
+      - vim
+      - tmux
+      - git 
+      - wget
+      - unzip
+    state: latest
+  become: true
+  become_user: root
+- name: Install Python 3
+  ansible.builtin.dnf:
+    name:
+      - python3-devel
+      - python3-pip
+      - python3-virtualenv
+    state: latest
+  become: true
+  become_user: root
+- name: Install python dependencies
+  ansible.builtin.pip:
+    name:
+      - biopython
+      - torch
+      - numpy
+      - scipy
+    state: latest
+  become: true
+  become_user: root
