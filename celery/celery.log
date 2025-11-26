@@ -1,0 +1,4 @@
+[2025-11-21 14:34:08,721: INFO/MainProcess] Connected to redis://localhost:6379/0
+[2025-11-21 14:34:08,724: INFO/MainProcess] mingle: searching for neighbors
+[2025-11-21 14:34:09,734: INFO/MainProcess] mingle: all alone
+[2025-11-21 14:34:09,756: INFO/MainProcess] celery@ucabmjc-host-ac3e7a0038 ready.
