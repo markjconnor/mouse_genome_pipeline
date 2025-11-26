@@ -1,6 +1,6 @@
 - name: Download and extract pdb70 HH-suite database
     hosts: workers
-    become: yes
+    become: true 
     tasks:
       - name: Ensure destination directory exists
         ansible.builtin.file:
