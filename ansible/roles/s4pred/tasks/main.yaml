@@ -1,0 +1,30 @@
+- name: Clone s4pred repository
+  ansible.builtin.git:
+    repo: https://github.com/psipred/s4pred
+    dest: /home/almalinux/s4pred
+    version: HEAD
+  become: true
+  become_user: almalinux
+
+- name: Download s4pred weights
+  ansible.builtin.get_url:
+    url: http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz
+    dest: /home/almalinux/s4pred/weights.tar.gz
+    mode: '0644'
+  become: true
+  become_user: almalinux
+
+- name: Extract weights archive
+  ansible.builtin.unarchive:
+    src: /home/almalinux/s4pred/weights.tar.gz
+    dest: /home/almalinux/s4pred
+    remote_src: true
+    owner: almalinux
+    group: almalinux
+  become: true
+
+- name: Remove downloaded weights archive
+  ansible.builtin.file:
+    path: /home/almalinux/s4pred/weights.tar.gz
+    state: absent
+  become: true

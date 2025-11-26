@@ -1,0 +1,33 @@
+- name: Ensure HHsearch directory exists
+  ansible.builtin.file:
+    path: /home/almalinux/hhsearch
+    state: directory
+    owner: almalinux
+    group: almalinux
+    mode: '0755'
+  become: true
+
+- name: Download HHsuite AVX2 release
+  ansible.builtin.get_url:
+    url: https://github.com/soedinglab/hh-suite/releases/download/v3.3.0/hhsuite-3.3.0-AVX2-Linux.tar.gz
+    dest: /home/almalinux/hhsearch/hhsuite.tar.gz
+    mode: '0644'
+    owner: almalinux
+    group: almalinux
+  become: true
+
+- name: Extract HHsuite archive into installation directory
+  ansible.builtin.unarchive:
+    src: /home/almalinux/hhsearch/hhsuite.tar.gz
+    dest: /home/almalinux/hhsearch
+    remote_src: true
+    owner: almalinux
+    group: almalinux
+  become: true
+
+- name: Remove HHsuite tarball
+  ansible.builtin.file:
+    path: /home/almalinux/hhsearch/hhsuite.tar.gz
+    state: absent
+  become: true
+

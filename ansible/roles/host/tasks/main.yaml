@@ -1,0 +1,37 @@
+- name: Install enterprise linux
+  ansible.builtin.dnf:
+    name:
+      - epel-release
+    state: latest
+  become: true
+  become_user: root
+  
+- name: Enable CRB
+  ansible.builtin.ini_file:
+    path: /etc/yum.repos.d/almalinux.repo
+    section: crb
+    option: enabled
+    value: '1'
+  become: true
+
+- name: Install ansible
+  ansible.builtin.dnf:
+    name:
+      - ansible
+    state: latest
+  become: true
+  become_user: root
+
+- name: Install Redis
+  ansible.builtin.dnf:
+    name: redis
+    state: present
+  become: true
+
+- name: Install Celery with Redis support
+  ansible.builtin.pip:
+    name: "celery[redis]"
+    state: present
+  become: true
+
+  # CONSIDER INSTALLING CELERY IN A PYTHON VENV

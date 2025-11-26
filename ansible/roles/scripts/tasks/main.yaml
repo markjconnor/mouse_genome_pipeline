@@ -1,0 +1,8 @@
+- name: Copy python scripts
+  ansible.builtin.copy:
+    src: /home/almalinux/coursework/
+    dest: /home/almalinux/coursework/
+    mode: '0644'   # (read-write permissions)
+    owner: almalinux
+    group: almalinux
+  become: true
