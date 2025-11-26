@@ -1,0 +1,23 @@
+- name: Download and extract pdb70 HH-suite database
+    hosts: workers
+    become: yes
+    tasks:
+      - name: Ensure destination directory exists
+        ansible.builtin.file:
+          path: /home/almalinux/Data/hhdb
+          state: directory
+          mode: '0755'
+
+      - name: Download pdb70 database 
+        ansible.builtin.get_url:
+          url: https://wwwuser.gwdg.de/~compbiol/data/hhsuite/databases/hhsuite_dbs/pdb70_from_mmcif_latest.tar.gz
+          dest: /home/almalinux/Data/hhdb/pdb70_from_mmcif_latest.tar.gz
+          mode: '0644'
+          force: no   # don't re-download if the file exists
+
+      - name: Extract pdb70 database 
+        ansible.builtin.unarchive:
+          src: /home/almalinux/Data/hhdb/pdb70_from_mmcif_latest.tar.gz
+          dest: /home/almalinux/Data/hhdb
+          remote_src: yes
+          creates: /home/almalinux/Data/hhdb/pdb70  # adjust to a file/folder that indicates extraction is done
