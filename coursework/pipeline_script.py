@@ -22,7 +22,7 @@ def run_hhsearch(a3m_file):
     """
     Run HHSearch to produce the hhr file
     """
-    cmd = ['/home/almalinux/hhsearch',
+    cmd = ['/home/almalinux/hhsearch/bin/hhsearch',
            '-i', a3m_file, '-cpu', '1', '-d', 
            '/home/almalinux/Data/hhdb/pdb70']
     print(f'STEP 3: RUNNING HHSEARCH: {" ".join(cmd)}')
@@ -52,7 +52,7 @@ def run_s4pred(input_file, out_file):
     """
     Runs the s4pred secondary structure predictor to produce the horiz file
     """
-    cmd = ['python3', '/home/s4pred/run_model.py',
+    cmd = ['python3', '/home/almalinux/s4pred/run_model.py',
            '-t', 'horiz', '-T', '1', input_file]
     print(f'STEP 1: RUNNING S4PRED: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
