@@ -34,4 +34,10 @@
     state: present
   become: true
 
+- name: Copy celery code
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/celery/
+    dest: /home/almalinux/celery
+  become: true
+
   # CONSIDER INSTALLING CELERY IN A PYTHON VENV

@@ -1,6 +1,6 @@
-from task import pipeline_script
+from task import run_pipeline 
 
-output = pipeline_script.delay()
+output = run_pipeline.delay()
 while not output.ready():    # until computation is finished
     result = output.get()
 
