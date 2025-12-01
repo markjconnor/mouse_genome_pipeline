@@ -22,6 +22,16 @@
   ansible.builtin.command: python3 -m venv /home/almalinux/venv
   args:
     creates: /home/almalinux/venv/bin/activate
+- name: Ensure pip temp/cache dirs exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: almalinux
+    group: almalinux
+    mode: '0755'
+  loop:
+    - /home/almalinux/pip-cache
+    - /home/almalinux/pip-tmp
 - name: Install python dependencies to venv
   ansible.builtin.pip:
     virtualenv: /home/almalinux/venv
@@ -35,4 +45,4 @@
     TMPDIR: /home/almalinux/pip-cache
     PIP_CACHE_DIR: /home/almalinux/pip-cache
   become: true
-  become_user: root
+  become_user: almalinux

@@ -6,3 +6,7 @@
   - hhsearch
   - s4pred
   - pdb
+
+- hosts: host
+  roles:
+  - host

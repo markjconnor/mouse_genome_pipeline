@@ -19,6 +19,19 @@ def generate_inventory():
     host_vars = {}
 
 
+    # Host group
+    hosts = []
+    for ip in host_ip_data:
+        hosts.append(ip)
+        host_vars[ip] = {"ip": [ip]}
+
+    # Workers group
+    workers = []
+    for ip in worker_ip_data:
+        workers.append(ip)
+        host_vars[ip] = {"ip": [ip]}
+
+    '''
     counter = 0
     workers = []
 
@@ -27,17 +40,19 @@ def generate_inventory():
         host_vars[name] = { "ip": [a] }
         workers.append(name)
         counter += 1
-
+    '''
     _meta = {}
     _meta["hostvars"] = host_vars
     _all = { "children": ["workers"] }
 
+    _host = {"hosts": hosts}
     _workers = { "hosts": workers }
 
     _jd = {}
     _jd["_meta"] = _meta
     _jd["all"] = _all
     _jd["workers"] = _workers
+    _jd["host"] = _host
 
     jd = json.dumps(_jd, indent=4)
     return jd

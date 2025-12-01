@@ -4,6 +4,11 @@
     state: directory
     mode: '0755'
 
+- name: Check if pdb70 database is already extracted
+  ansible.builtin.stat:
+    path: /home/almalinux/Data/hhdb/pdb70_hhm.ffdata
+  register: pdb_extracted # holds condition if pdb has already been extracted
+      
 - name: Download pdb70 database 
   ansible.builtin.get_url:
     url: https://wwwuser.gwdg.de/~compbiol/data/hhsuite/databases/hhsuite_dbs/pdb70_from_mmcif_latest.tar.gz
@@ -11,10 +16,17 @@
     tmp_dest: /home/almalinux/Data/hhdb
     mode: '0644'
     force: no   # don't re-download if the file exists
+  when: not pdb_extracted.stat.exists
 
 - name: Extract pdb70 database 
   ansible.builtin.unarchive:
     src: /home/almalinux/Data/hhdb/pdb70_from_mmcif_latest.tar.gz
     dest: /home/almalinux/Data/hhdb
     remote_src: yes
-    creates: /home/almalinux/Data/hhdb/pdb70  # adjust to a file/folder that indicates extraction is done
+    creates: /home/almalinux/Data/hhdb/pdb70_hhm.ffdata # only extracts if extracted files don't already exist
+
+- name: Remove pdb70 tarball after extraction
+  ansible.builtin.file:
+    path: /home/almalinux/Data/hhdb/pdb70_from_mmcif_latest.tar.gz
+    state: absent
+
