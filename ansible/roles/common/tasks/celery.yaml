@@ -1,0 +1,23 @@
+- name: Install Redis
+  ansible.builtin.dnf:
+    name: redis
+    state: present
+  become: true
+
+- name: Install Celery with Redis support
+  ansible.builtin.pip:
+    name: "celery[redis]"
+    state: present
+  become: true
+
+- name: Ensure Celery directory exists
+  ansible.builtin.file:
+    path: /home/almalinux/celery
+    state: directory
+    mode: '0755'
+
+- name: Copy Celery config
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/celery/celeryconfig.py
+    dest: /home/almalinux/celery/celeryconfig.py
+  become: true
