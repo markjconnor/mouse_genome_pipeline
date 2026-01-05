@@ -6,13 +6,11 @@
   become: true
   become_user: root
   
-- name: Enable CRB
-  ansible.builtin.ini_file:
-    path: /etc/yum.repos.d/almalinux.repo
-    section: crb
-    option: enabled
-    value: '1'
+- name: Enable CRB repository
+  ansible.builtin.command:
+    cmd: dnf config-manager --set-enabled crb
   become: true
+  changed_when: false
 
 - name: Install ansible
   ansible.builtin.dnf:

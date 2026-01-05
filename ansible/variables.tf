@@ -17,7 +17,7 @@ variable namespace_ending {
 # The name of your ssh key uploaded to rancher 
 variable keyname {
   type = string
-  default = "ucabmjc-cnc"
+  default = "cw-vm"
 }
 
 variable host {
