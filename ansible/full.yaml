@@ -1,14 +1,20 @@
 ---
-- hosts: workers
+- hosts: all
   roles:
   - common
-  - fasta
-  - scripts
-  - hhsearch
-  - s4pred
-  - pdb
 
 - hosts: host
   roles:
   - host
   - redis
+
+- hosts: workers
+  roles:
+  - python
+  - fasta
+  - scripts
+  - hhsearch
+  - s4pred
+  - pdb
+  - celery
+

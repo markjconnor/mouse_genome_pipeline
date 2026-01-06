@@ -18,6 +18,6 @@
 - name: Ensure Redis service is started
   ansible.builtin.service:
     name: redis
-    state: restarted
+    state: started
     enabled: yes
   become: true

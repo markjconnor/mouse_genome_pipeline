@@ -16,20 +16,3 @@
     state: directory
     mode: '0755'
 
-- name: Copy Celery task
-  ansible.builtin.copy:
-    src: /home/almalinux/ds4eng-cw/celery/tasks.py
-    dest: /home/almalinux/celery/tasks.py
-  become: true
-
-- name: Copy Celery config
-  ansible.builtin.copy:
-    src: /home/almalinux/ds4eng-cw/celery/celeryconfig.py
-    dest: /home/almalinux/celery/celeryconfig.py
-  become: true
-
-- name: Copy celery systemd service file
-  ansible.builtin.copy:
-    src: /home/almalinux/ds4eng-cw/ansible/files/celery.service
-    dest: /etc/systemd/system/celery.service
-  become: true

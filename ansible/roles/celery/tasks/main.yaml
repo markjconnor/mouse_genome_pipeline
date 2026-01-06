@@ -1,10 +1,16 @@
-- name: Remove celery systemd service file if it exists
-  ansible.builtin.file:
-    path: /etc/systemd/system/celery.service
-    state: absent
+- name: Copy Celery task
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/celery/tasks.py
+    dest: /home/almalinux/celery/tasks.py
   become: true
 
-- name: Readd the celery systemd service file
+- name: Copy Celery config
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/celery/celeryconfig.py
+    dest: /home/almalinux/celery/celeryconfig.py
+  become: true
+
+- name: Copy celery systemd service file
   ansible.builtin.copy:
     src: /home/almalinux/ds4eng-cw/ansible/files/celery.service
     dest: /etc/systemd/system/celery.service
