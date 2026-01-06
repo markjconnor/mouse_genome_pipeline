@@ -6,6 +6,11 @@
   become: true
   become_user: almalinux
 
+- name: Check if weights already exist
+  ansible.builtin.stat:
+    path: /home/almalinux/s4pred/weights
+  register: weights_exist
+
 - name: Download s4pred weights
   ansible.builtin.get_url:
     url: http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz
@@ -13,6 +18,7 @@
     mode: '0644'
   become: true
   become_user: almalinux
+  when: not weights_exist.stat.exists
 
 - name: Extract weights archive
   ansible.builtin.unarchive:
@@ -22,6 +28,7 @@
     owner: almalinux
     group: almalinux
   become: true
+  when: not weights_exist.stat.exists
 
 - name: Remove downloaded weights archive
   ansible.builtin.file:
