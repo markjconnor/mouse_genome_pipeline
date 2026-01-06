@@ -52,7 +52,7 @@ def run_s4pred(input_file, out_file):
     """
     Runs the s4pred secondary structure predictor to produce the horiz file
     """
-    cmd = ['python3', '/home/almalinux/s4pred/run_model.py',
+    cmd = ['/home/almalinux/venv/bin/python3', '/home/almalinux/s4pred/run_model.py',
            '-t', 'horiz', '-T', '1', input_file]
     print(f'STEP 1: RUNNING S4PRED: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)

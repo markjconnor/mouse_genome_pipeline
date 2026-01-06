@@ -26,6 +26,16 @@
     state: present
   become: true
 
+- name: Install Python 3
+  ansible.builtin.dnf:
+    name:
+      - python3-devel
+      - python3-pip
+      - python3-virtualenv
+    state: latest
+  become: true
+  become_user: root
+
 - name: Install Celery with Redis support
   ansible.builtin.pip:
     name: "celery[redis]"
