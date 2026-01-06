@@ -1,0 +1,25 @@
+- name: Remove celery systemd service file if it exists
+  ansible.builtin.file:
+    path: /etc/systemd/system/celery.service
+    state: absent
+  become: true
+
+- name: Readd the celery systemd service file
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/ansible/files/celery.service
+    dest: /etc/systemd/system/celery.service
+  become: true
+
+- name: Disable SELinux enforcement temporarily
+  ansible.builtin.command: setenforce 0
+  become: true
+
+- name: Start celery service
+  ansible.builtin.systemd:
+    name: celery
+    state: started
+  become: true
+
+- name: Enable SELinux enforcement again
+  ansible.builtin.command: setenforce 1
+  become: true

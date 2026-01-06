@@ -1,0 +1,15 @@
+[Unit]
+Description=Celery Service
+After=network.target
+
+[Service]
+Type=forking
+User=almalinux
+Group=almalinux
+ExecStart=celery -A tasks worker --loglevel=INFO --pidfile=celery.pid --logfile=celery.log
+ExecStop=celery multi stop_verify worker --pidfile=celery.pid --logfile=celery.log
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
