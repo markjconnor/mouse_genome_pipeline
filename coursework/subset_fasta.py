@@ -13,7 +13,7 @@ def read_id_list():
     with open(sys.argv[1]) as fh:
         return set(line.strip() for line in fh if line.strip())
 
-def subset_fasta(output_fasta="experiment_sequences.fasta"):
+def subset_fasta(output_fasta="/home/almalinux/coursework/experiment_sequences.fasta"):
     """
     Subsets the genome FASTA using experiment IDs
     """
