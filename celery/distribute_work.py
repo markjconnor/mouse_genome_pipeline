@@ -1,4 +1,4 @@
-from task import run_pipeline 
+from tasks import run_pipeline 
 
 output = run_pipeline.delay()
 while not output.ready():    # until computation is finished
