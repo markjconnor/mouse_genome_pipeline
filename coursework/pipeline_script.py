@@ -12,7 +12,7 @@ def run_parser(hhr_file):
     """
     Run the results_parser.py over the hhr file to produce the output summary
     """
-    cmd = ['python3', './results_parser.py', hhr_file]
+    cmd = ['/home/almalinux/venv/bin/python3', './results_parser.py', hhr_file]
     print(f'STEP 4: RUNNING PARSER: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
