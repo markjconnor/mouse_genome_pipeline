@@ -31,6 +31,16 @@ def generate_inventory():
         workers.append(ip)
         host_vars[ip] = {"ip": [ip]}
 
+    
+    host_worker_list = [
+        {"host": host_ip, "workers": worker_ip_data}
+        for host_ip in host_ip_data
+    ]
+
+    # Save this mapping to a file
+    with open("ips.json", "w") as f:
+        json.dump(host_worker_list, f, indent=4)
+
     '''
     counter = 0
     workers = []
@@ -53,6 +63,7 @@ def generate_inventory():
     _jd["all"] = _all
     _jd["workers"] = _workers
     _jd["host"] = _host
+
 
     jd = json.dumps(_jd, indent=4)
     return jd
