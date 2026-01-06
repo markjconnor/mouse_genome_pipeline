@@ -5,7 +5,6 @@
 .terraform.lock.hcl
 
 # Coursework
-coursework/pipeline_example/
 coursework/build_cluster/
 
 # Celery
