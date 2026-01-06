@@ -1,3 +1,6 @@
+import json
+import os
+
 JSON_FILE = "/home/almalinux/ips.json"
 
 HOST = ""
@@ -11,7 +14,7 @@ if os.path.exists(JSON_FILE):
             HOST = host_worker_data[0]["host"]
 
 broker_url = f'redis://{HOST}:6379/0'
-backend_url = f'redis://{HOST}:6379'
+result_backend = f'redis://{HOST}:6379'
 timezone = 'Europe/Oslo'
 
 result_backend_transport_options = {
