@@ -10,7 +10,7 @@ def run_pipeline():
     Runs the pipeline script on the worker machine.
     NOTE: this fasta path must exist on that worker machine.
     """
-    cmd = ["python3", "/home/almalinux/pipeline_script.py", "/home/almalinux/UP000000589_10090.fasta"]
+    cmd = ["python3", "/home/almalinux/pipeline_script.py", "/home/almalinux/experiment_sequences.fasta"]
     result = subprocess.run(cmd, capture_output=True, text=True)
 
     return {

@@ -1,0 +1,23 @@
+- name: Ensure Redis binds to all interfaces 
+  ansible.builtin.lineinfile:
+    path: /etc/redis.conf
+    regexp: '^bind\s+127\.0\.0\.1\s+-::1'
+    line: 'bind 0.0.0.0 -::1'
+    state: present
+    backrefs: yes
+  become: true
+
+- name: Disable Redis protected mode
+  ansible.builtin.lineinfile:
+    path: /etc/redis.conf
+    regexp: '^protected-mode\s+yes'
+    line: 'protected-mode no'
+    state: present
+  become: true
+  
+- name: Ensure Redis service is started
+  ansible.builtin.service:
+    name: redis
+    state: restarted
+    enabled: yes
+  become: true

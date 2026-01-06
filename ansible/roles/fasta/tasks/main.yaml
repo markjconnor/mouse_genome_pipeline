@@ -1,3 +1,8 @@
+- name: Check if fasta file already exists
+  ansible.builtin.stat:
+    path: /home/almalinux/UP000000589_10090.fasta
+  register: fasta_downloaded
+
 - name: Download fasta file
   ansible.builtin.get_url:
     url: https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/reference_proteomes/Eukaryota/UP000000589/UP000000589_10090.fasta.gz
@@ -5,9 +10,11 @@
     mode: '0644'
     owner: almalinux
     group: almalinux
+  when: not fasta_downloaded.stat.exists
 
-- name: Unzip fasta file
-  ansible.builtin.unarchive:
-    src: /home/almalinux/UP000000589_10090.fasta.gz
-    dest: /home/almalinux/
-    remote_src: true 
+- name: Decompress fasta file
+  ansible.builtin.command:
+    cmd: gunzip -f /home/almalinux/UP000000589_10090.fasta.gz
+  args:
+    creates: /home/almalinux/UP000000589_10090.fasta
+  when: not fasta_downloaded.stat.exists

@@ -2,6 +2,7 @@
 - hosts: workers
   roles:
   - common
+  - fasta
   - scripts
   - hhsearch
   - s4pred
@@ -10,3 +11,4 @@
 - hosts: host
   roles:
   - host
+  - redis
