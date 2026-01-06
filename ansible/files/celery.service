@@ -3,9 +3,10 @@ Description=Celery Service
 After=network.target
 
 [Service]
-Type=forking
+Type=simple
 User=almalinux
 Group=almalinux
+WorkingDirectory=/home/almalinux/celery  
 ExecStart=celery -A tasks worker --loglevel=INFO --pidfile=celery.pid --logfile=celery.log
 ExecStop=celery multi stop_verify worker --pidfile=celery.pid --logfile=celery.log
 Restart=always
