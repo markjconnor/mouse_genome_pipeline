@@ -1,4 +1,5 @@
 from celery import Celery
+import subprocess
 
 app = Celery('tasks')
 app.config_from_object('celeryconfig')
