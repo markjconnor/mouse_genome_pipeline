@@ -1,7 +1,9 @@
 import sys
+import os
 from subprocess import Popen, PIPE
 from Bio import SeqIO
 import shutil
+import tempfile
 
 """
 usage: python pipeline_script.py INPUT.fasta  
@@ -17,6 +19,18 @@ def run_parser(hhr_file):
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
     print(out.decode("utf-8"))
+    '''
+    print("PARSER STDOUT:\n", out.decode())
+    print("PARSER STDERR:\n", err.decode())
+
+    if p.returncode != 0:
+        raise RuntimeError(f"Parser failed:\n{err.decode()}")
+
+    if not os.path.exists(out_file):
+        raise FileNotFoundError(f"{out_file} not created by results_parser.py")
+
+    return out_file
+    '''
 
 def run_hhsearch(a3m_file):
     """
@@ -75,19 +89,27 @@ def read_input(file):
 
 
 if __name__ == "__main__":
-    
     sequences = read_input(sys.argv[1])
-    tmp_file = "tmp.fas"
-    horiz_file = "tmp.horiz"
-    a3m_file = "tmp.a3m"
-    hhr_file = "tmp.hhr"
-    for k, v in sequences.items():
-        print(f'Now analysing input: {k}')
-        with open(tmp_file, "w") as fh_out:
-            fh_out.write(f">{k}\n")
-            fh_out.write(f"{v}\n")
-        run_s4pred(tmp_file, horiz_file)
-        read_horiz(tmp_file, horiz_file, a3m_file)
-        run_hhsearch(a3m_file)
-        run_parser(hhr_file)
-        shutil.move("hhr_parse.out", f'{k}_parse.out')
+
+    for seq_id, sequence in sequences.items():
+        print(f'Now analysing input: {seq_id}')
+
+        # Create a temporary directory for this sequence
+        with tempfile.TemporaryDirectory(prefix=f"job_{seq_id}_") as workdir:
+            tmp_file = os.path.join(workdir, "tmp.fas")
+            horiz_file = os.path.join(workdir, "tmp.horiz")
+            a3m_file = os.path.join(workdir, "tmp.a3m")
+            hhr_file = os.path.join(workdir, "tmp.hhr")
+
+            with open(tmp_file, "w") as fh_out:
+                fh_out.write(f">{seq_id}\n{sequence}\n")
+
+            run_s4pred(tmp_file, horiz_file)
+            read_horiz(tmp_file, horiz_file, a3m_file)
+            run_hhsearch(a3m_file)
+
+            run_parser(hhr_file)
+
+            shutil.move(hhr_file, f'/home/almalinux/coursework/{seq_id}_parse.out')
+
+            print(f"Task finished: {seq_id}, output: {seq_id}_parse.out")  
