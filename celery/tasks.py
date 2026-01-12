@@ -1,5 +1,8 @@
 from celery import Celery
 import subprocess
+import tempfile
+import os
+import textwrap
 
 app = Celery('tasks')
 app.config_from_object('celeryconfig')
