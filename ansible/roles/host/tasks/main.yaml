@@ -26,4 +26,13 @@
     dest: /home/almalinux/celery
   become: true
 
+- name: Copy experiment ids file
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/coursework/experiment_ids.txt
+    dest: /home/almalinux/experiment_ids.txt
+  become: true
+
+- name: Run script to create fasta file
+  ansible.builtin.command:
+    cmd: python3 /home/almalinux/subset_fasta.py /home/almalinux/experiment_ids.txt
   # CONSIDER INSTALLING CELERY IN A PYTHON VENV
