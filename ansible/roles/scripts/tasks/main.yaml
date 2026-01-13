@@ -5,7 +5,6 @@
     mode: '0644'   # (read-write permissions)
     owner: almalinux
     group: almalinux
-  become: true
 
 - name: Run script to create fasta file
   ansible.builtin.command:
@@ -13,3 +12,8 @@
   args:
     creates: /home/almalinux/coursework/experiment_sequences.fasta
   
+- name: Create results directory
+  ansible.builtin.file:
+    path: /home/almalinux/results
+    state: directory
+    mode: '0755'
