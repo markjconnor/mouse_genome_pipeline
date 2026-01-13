@@ -4,6 +4,7 @@ from collector import collect_results
 
 
 def parse_fasta(path):
+    
     entries = []
     with open(path) as f:
         seq_id = None
@@ -14,7 +15,7 @@ def parse_fasta(path):
             if line.startswith(">"):
                 if seq_id:
                     entries.append((seq_id, "".join(seq_lines)))
-                seq_id = line[1:]
+                seq_id = line[1:].split()[0]
                 seq_lines = []
             else:
                 seq_lines.append(line)

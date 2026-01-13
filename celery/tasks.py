@@ -18,7 +18,7 @@ def run_pipeline_for_sequence(seq_id, sequence):
 
         # Write single-entry FASTA
         with open(fasta_path, "w") as f:
-            f.write(textwrap.dedent(f""">{seq_id}{sequence}"""))
+            f.write(textwrap.dedent(f">{seq_id}\n{sequence}\n"))
 
         cmd = [
             "/home/almalinux/venv/bin/python3",
