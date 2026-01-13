@@ -24,15 +24,26 @@
   ansible.builtin.copy:
     src: /home/almalinux/ds4eng-cw/celery/
     dest: /home/almalinux/celery
-  become: true
+
+- name: Make sure coursework directory exists
+  ansible.builtin.file:
+    path: /home/almalinux/coursework 
+    state: directory
+    mode: '0755'
 
 - name: Copy experiment ids file
   ansible.builtin.copy:
     src: /home/almalinux/ds4eng-cw/coursework/experiment_ids.txt
-    dest: /home/almalinux/experiment_ids.txt
-  become: true
+    dest: /home/almalinux/coursework/experiment_ids.txt
+
+- name: Copy subset_fasta.py script
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/coursework/subset_fasta.py
+    dest: /home/almalinux/subset_fasta.py
 
 - name: Run script to create fasta file
   ansible.builtin.command:
     cmd: python3 /home/almalinux/subset_fasta.py /home/almalinux/experiment_ids.txt
+  args:
+    creates: /home/almalinux/coursework/experiment_sequences.fasta
   # CONSIDER INSTALLING CELERY IN A PYTHON VENV
