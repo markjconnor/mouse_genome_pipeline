@@ -11,10 +11,10 @@
 - hosts: workers
   roles:
   - python
-  - fasta
   - scripts
   - hhsearch
   - s4pred
   - pdb
   - celery
+  - node_exporter
 
