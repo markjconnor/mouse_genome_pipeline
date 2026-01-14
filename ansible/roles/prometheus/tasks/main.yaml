@@ -1,0 +1,32 @@
+- name: Install golang
+  ansible.builtin.dnf:
+    name: golang
+    state: latest
+  become: true
+
+- name: Install Prometheus and Node exporter
+  ansible.builtin.dnf:
+    name:
+      - golang-github-prometheus-prometheus
+      - golang-github-prometheus-node-exporter
+    state: latest
+  become: true
+
+- name: Copy Prometheus service file
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/ansible/files/prometheus.service
+    dest: /etc/systemd/system/prometheus.service
+    owner: root
+    group: root
+  become: true
+
+#TODO: Change Prometheus config to scrape worker nodes
+
+- name: Run prometheus
+  ansible.builtin.systemd:
+    name: prometheus
+    enabled: true
+    state: started
+    daemon_reload: true
+  become: true
+

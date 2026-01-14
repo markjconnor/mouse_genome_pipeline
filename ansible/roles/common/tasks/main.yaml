@@ -3,6 +3,7 @@
 - import_tasks: python.yaml
 - import_tasks: fasta.yaml
 - import_tasks: celery.yaml    # python must be installed before celery
+- import_tasks: ips.yaml
 
 
 

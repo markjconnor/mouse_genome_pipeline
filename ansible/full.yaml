@@ -7,6 +7,7 @@
   roles:
   - host
   - redis
+  - prometheus
 
 - hosts: workers
   roles:

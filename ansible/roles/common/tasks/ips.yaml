@@ -1,0 +1,6 @@
+- name: Copy ips file
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/ansible/ips.json
+    dest: /home/almalinux/ips.json
+  become: true
+  become_user: almalinux
