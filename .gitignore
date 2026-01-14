@@ -10,3 +10,4 @@ coursework/build_cluster/
 # Celery
 celery/dump.rdb
 celery/__pycache__/
+ansible/roles/tmp/tasks/main.yaml

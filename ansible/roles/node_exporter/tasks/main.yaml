@@ -1,6 +1,6 @@
 - name: Install node exporter
   ansible.builtin.dnf:
-    name: golang-github-prometheus-node_exporter
+    name: golang-github-prometheus-node-exporter
     state: latest
   become: true
 
@@ -12,7 +12,6 @@
     group: root
   become: true
   
-
 - name: Start node exporter
   ansible.builtin.systemd:
     name: node_exporter
