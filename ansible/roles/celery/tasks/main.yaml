@@ -23,7 +23,7 @@
 - name: Start celery service
   ansible.builtin.systemd:
     name: celery
-    state: restarted
+    state: started
     daemon_reload: true
   become: true
 

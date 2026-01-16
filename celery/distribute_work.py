@@ -79,8 +79,7 @@ def write_profile_csv(stats, path="example_profile_output.csv"):
 
 
 if __name__ == "__main__":
-    #TODO Change this back to experiment_sequences.fasta
-    fasta_file = "/home/almalinux/coursework/pipeline_example/test.fa"
+    fasta_file = "/home/almalinux/coursework/pipeline_example/experiment_sequences.fasta"
 
     entries = parse_fasta(fasta_file)
 
