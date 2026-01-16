@@ -48,7 +48,7 @@ def normalize_results(raw_results):
         row = r["rows"][0]  # exactly one row per protein
 
         records.append({
-            "seq_id": r["seq_id"],                 # protein ID
+            "seq_id": r["seq_id"],                
             "best_hit": row["best_hit"],
             "std": safe_float(row["score_std"]),
             "gmean": safe_float(row["score_gmean"]),
@@ -59,7 +59,7 @@ def normalize_results(raw_results):
 def write_hits_csv(records, path="example_hits_output.csv"):
     with open(path, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["seq_id", "best_hit"])
+        writer.writerow(["fasta_id", "best_hit_id"])
 
         for r in records:
             writer.writerow([r["seq_id"], r["best_hit"]])
@@ -70,8 +70,8 @@ def compute_profile_stats(records):
     gmeans = [r["gmean"] for r in records if not math.isnan(r["gmean"])]
 
     return {
-        "mean_std": mean(stds),
-        "mean_gmean": mean(gmeans),
+        "ave_std": round(mean(stds), 2),
+        "ave_gmean": round(mean(gmeans), 2),
     }
 
 def write_profile_csv(stats, path="example_profile_output.csv"):
