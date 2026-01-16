@@ -28,9 +28,6 @@ def parse_fasta(path):
 
     return entries
 
-
-import math
-
 def safe_float(x):
     try:
         return float(x)
@@ -77,8 +74,8 @@ def compute_profile_stats(records):
 def write_profile_csv(stats, path="example_profile_output.csv"):
     with open(path, "w", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["mean_std", "mean_gmean"])
-        writer.writerow([stats["mean_std"], stats["mean_gmean"]])
+        writer.writerow(["ave_std", "ave_gmean"])
+        writer.writerow([stats["ave_std"], stats["ave_gmean"]])
 
 
 if __name__ == "__main__":
@@ -99,7 +96,7 @@ if __name__ == "__main__":
     print(f"Chord ID: {job.id}")
 
     result = job.get()
-    print(result)
+
     records = normalize_results(result)
 
     write_hits_csv(records)

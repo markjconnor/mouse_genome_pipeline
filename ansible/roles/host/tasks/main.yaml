@@ -38,4 +38,19 @@
     cmd: python3 /home/almalinux/subset_fasta.py /home/almalinux/experiment_ids.txt
   args:
     creates: /home/almalinux/coursework/experiment_sequences.fasta
+  
+
+#TODO: Remove this temporary task
+- name: TEMP - Copy pipeline_example directory
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/coursework/pipeline_example
+    dest: /home/almalinux/coursework/pipeline_example
+    
   # CONSIDER INSTALLING CELERY IN A PYTHON VENV
+
+
+#TODO: Remove this temporary task
+- name: TEMP - Copy test fasta file
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/coursework/new_test.fa
+    dest: /home/almalinux/coursework/pipeline_example/test.fa
