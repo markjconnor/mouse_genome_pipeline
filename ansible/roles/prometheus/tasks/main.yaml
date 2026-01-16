@@ -7,7 +7,7 @@
 - name: Install Prometheus and Node exporter
   ansible.builtin.dnf:
     name:
-      - golang-github-prometheus-prometheus
+      - golang-github-prometheus
       - golang-github-prometheus-node-exporter
     state: latest
   become: true
