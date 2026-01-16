@@ -6,8 +6,11 @@
 
 # Coursework
 coursework/build_cluster/
+coursework/new_test.fa
 
 # Celery
 celery/dump.rdb
 celery/__pycache__/
+
+# Ansible
 ansible/roles/tmp/tasks/main.yaml
