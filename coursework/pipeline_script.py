@@ -76,11 +76,6 @@ def run_s4pred(input_file, horiz_file):
     out, err = p.communicate()
     with open(horiz_file, "w") as fh_out:
         fh_out.write(out.decode("utf-8"))
-    
-    with open(horiz_file, "r") as fh_check:
-        print("S4PRED OUTPUT:")
-        print(fh_check.read())
-
 
     
 def read_input(file):
@@ -117,20 +112,11 @@ if __name__ == "__main__":
             with open(tmp_file, "w") as fh_out:
                 fh_out.write(f">{seq_id}\n{sequence}\n")
 
-            with open(tmp_file, "r") as fh_check:
-                print("tmp file OUTPUT:")
-                print(fh_check.read())
-
             run_s4pred(tmp_file, horiz_file)
             read_horiz(tmp_file, horiz_file, a3m_file)
             run_hhsearch(a3m_file)
 
             run_parser(hhr_file, results_file)
-
-            if os.path.exists(hhr_file):
-                print(f"[DEBUG] tmp.hhr exists: {hhr_file}")
-            else:
-                print(f"[DEBUG] tmp.hhr NOT found! HHsearch may have failed.")
             
             shutil.move(results_file, f'/home/almalinux/results/{seq_id}_parse.out')
 

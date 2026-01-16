@@ -3,6 +3,8 @@ import subprocess
 import tempfile
 import os
 import textwrap
+import glob
+import csv
 
 app = Celery('tasks')
 app.config_from_object('celeryconfig')
@@ -34,9 +36,52 @@ def run_pipeline_for_sequence(seq_id, sequence):
             text=True,
         )
 
+
+        # Read this specific task's output
+        results_dir = "/home/almalinux/results"
+        pattern = os.path.join(results_dir, f"*{seq_id}*_parse.out")
+        matches = glob.glob(pattern)
+
+        if not matches:
+            return {
+                "seq_id": seq_id,
+                "success": False,
+                "error": "Result file not found",
+            }
+
+        result_path = matches[0]
+
+        rows = []
+        with open(result_path, newline="") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                row["seq_id"] = seq_id
+                rows.append(row)
+
         return {
             "seq_id": seq_id,
-            "returncode": result.returncode,
-            "stdout": result.stdout,
-            "stderr": result.stderr,
+            "success": True,
+            "rows": rows,
         }
+
+@app.task
+def collect_results(results):
+    return results
+
+    """
+    Chord callback: aggregate all result files into JSON
+    
+    results_dir = "/home/almalinux/results"
+    result_files = glob.glob(f"{results_dir}/*_parse.out")
+
+    aggregated = []
+
+    for path in result_files:
+        with open(path) as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                aggregated.append(dict(row))
+
+    print("This is aggregated results:", aggregated)
+    return aggregated
+    """
