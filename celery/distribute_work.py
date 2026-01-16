@@ -1,6 +1,9 @@
 from celery import chord
 from tasks import run_pipeline_for_sequence, collect_results
 import json
+from statistics import mean
+import math
+import csv
 
 
 def parse_fasta(path):
@@ -26,6 +29,58 @@ def parse_fasta(path):
     return entries
 
 
+import math
+
+def safe_float(x):
+    try:
+        return float(x)
+    except (ValueError, TypeError):
+        return math.nan
+
+
+def normalize_results(raw_results):
+    records = []
+
+    for r in raw_results:
+        if not r.get("rows"):
+            continue  # safety check
+
+        row = r["rows"][0]  # exactly one row per protein
+
+        records.append({
+            "seq_id": r["seq_id"],                 # protein ID
+            "best_hit": row["best_hit"],
+            "std": safe_float(row["score_std"]),
+            "gmean": safe_float(row["score_gmean"]),
+        })
+
+    return records
+
+def write_hits_csv(records, path="example_hits_output.csv"):
+    with open(path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["seq_id", "best_hit"])
+
+        for r in records:
+            writer.writerow([r["seq_id"], r["best_hit"]])
+
+
+def compute_profile_stats(records):
+    stds = [r["std"] for r in records if not math.isnan(r["std"])]
+    gmeans = [r["gmean"] for r in records if not math.isnan(r["gmean"])]
+
+    return {
+        "mean_std": mean(stds),
+        "mean_gmean": mean(gmeans),
+    }
+
+def write_profile_csv(stats, path="example_profile_output.csv"):
+    with open(path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["mean_std", "mean_gmean"])
+        writer.writerow([stats["mean_std"], stats["mean_gmean"]])
+
+
 if __name__ == "__main__":
     #TODO Change this back to experiment_sequences.fasta
     fasta_file = "/home/almalinux/coursework/pipeline_example/test.fa"
@@ -45,5 +100,10 @@ if __name__ == "__main__":
 
     result = job.get()
     print(result)
-    with open("all_results.json", "w") as f:
-        json.dump(result, f, indent=2)
+    records = normalize_results(result)
+
+    write_hits_csv(records)
+
+    profile_stats = compute_profile_stats(records)
+    write_profile_csv(profile_stats)
+

@@ -60,7 +60,6 @@ def run_pipeline_for_sequence(seq_id, sequence):
 
         return {
             "seq_id": seq_id,
-            "success": True,
             "rows": rows,
         }
 
