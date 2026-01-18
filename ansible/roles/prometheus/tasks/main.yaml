@@ -22,7 +22,7 @@
 
 - name: Read ips.json
   ansible.builtin.set_fact:
-    ips_data: "{{ lookup('file', '/home/almalinux/ips.json') | from_json }}"
+    ips_data: "{{ lookup('file', '/home/almalinux/ds4eng-cw/ansible/ips.json') | from_json }}"
 
 - name: Extract worker IPs
   ansible.builtin.set_fact:
@@ -30,7 +30,7 @@
 
 - name: Render Prometheus config with worker targets
   ansible.builtin.template:
-    src: prometheus.yml.j2
+    src: /home/almalinux/ds4eng-cw/ansible/files/prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml
     owner: root
     group: root
