@@ -69,6 +69,12 @@ resource "harvester_virtualmachine" "host" {
   cloudinit {
     user_data_secret_name = harvester_cloudinit_secret.cloud-config.name
   }
+
+  tags = {
+    condenser_ingress_isEnabled = true
+    condenser_ingress_prometheus-ucabmjc/hostname = "prometheus_ucabmjc"
+    condenser_ingress_prometheus/port = 9090
+  }
   
   timeouts {
     create = "20m"
