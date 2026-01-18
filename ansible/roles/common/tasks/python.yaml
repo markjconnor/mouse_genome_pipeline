@@ -7,3 +7,9 @@
     state: latest
   become: true
   become_user: root
+
+- name: Create results directory
+  ansible.builtin.file:
+    path: /home/almalinux/results
+    state: directory
+    mode: '0755'

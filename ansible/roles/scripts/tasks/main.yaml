@@ -12,8 +12,3 @@
   args:
     creates: /home/almalinux/coursework/experiment_sequences.fasta
   
-- name: Create results directory
-  ansible.builtin.file:
-    path: /home/almalinux/results
-    state: directory
-    mode: '0755'
