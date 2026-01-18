@@ -65,4 +65,7 @@ def run_pipeline_for_sequence(seq_id, sequence):
 
 @app.task
 def collect_results(results):
+    """
+    Callback to collect all results from the chord.
+    """
     return results

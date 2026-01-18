@@ -53,7 +53,7 @@ def normalize_results(raw_results):
 
     return records
 
-def write_hits_csv(records, path="/home/almalinux/results/example_hits_output.csv"):
+def write_hits_csv(records, path="/home/almalinux/results/hits_output.csv"):
     with open(path, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["fasta_id", "best_hit_id"])
@@ -71,7 +71,7 @@ def compute_profile_stats(records):
         "ave_gmean": round(mean(gmeans), 2),
     }
 
-def write_profile_csv(stats, path="/home/almalinux/results/example_profile_output.csv"):
+def write_profile_csv(stats, path="/home/almalinux/results/profile_output.csv"):
     with open(path, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["ave_std", "ave_gmean"])
