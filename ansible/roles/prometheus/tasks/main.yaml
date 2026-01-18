@@ -20,7 +20,22 @@
     group: root
   become: true
 
-#TODO: Change Prometheus config to scrape worker nodes
+- name: Read ips.json
+  ansible.builtin.set_fact:
+    ips_data: "{{ lookup('file', '/home/almalinux/ips.json') | from_json }}"
+
+- name: Extract worker IPs
+  ansible.builtin.set_fact:
+    worker_ips: "{{ ips_data[0].workers }}"
+
+- name: Render Prometheus config with worker targets
+  ansible.builtin.template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
 
 - name: Run prometheus
   ansible.builtin.systemd:
