@@ -66,21 +66,3 @@ def run_pipeline_for_sequence(seq_id, sequence):
 @app.task
 def collect_results(results):
     return results
-
-    """
-    Chord callback: aggregate all result files into JSON
-    
-    results_dir = "/home/almalinux/results"
-    result_files = glob.glob(f"{results_dir}/*_parse.out")
-
-    aggregated = []
-
-    for path in result_files:
-        with open(path) as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                aggregated.append(dict(row))
-
-    print("This is aggregated results:", aggregated)
-    return aggregated
-    """
