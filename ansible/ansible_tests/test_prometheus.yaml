@@ -1,0 +1,21 @@
+---
+- hosts: all
+  roles:
+  - test_prometheus
+  - common
+
+- hosts: host
+  roles:
+  - host
+  - redis
+  - prometheus
+
+- hosts: workers
+  roles:
+  - python
+  - scripts
+  - hhsearch
+  - s4pred
+  - pdb
+  - celery
+  - node_exporter
