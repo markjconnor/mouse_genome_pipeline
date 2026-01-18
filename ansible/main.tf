@@ -72,7 +72,7 @@ resource "harvester_virtualmachine" "host" {
 
   tags = {
     condenser_ingress_isEnabled = true
-    condenser_ingress_prometheus-ucabmjc/hostname = "prometheus_ucabmjc"
+    condenser_ingress_prometheus-ucabmjc/hostname = "prometheus-ucabmjc"
     condenser_ingress_prometheus/port = 9090
   }
   
