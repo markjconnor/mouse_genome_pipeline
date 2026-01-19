@@ -72,8 +72,9 @@ resource "harvester_virtualmachine" "host" {
 
   tags = {
     condenser_ingress_isEnabled = true
-    condenser_ingress_prometheus-ucabmjc/hostname = "prometheus-ucabmjc"
-    condenser_ingress_prometheus/port = 9090
+    condenser_ingress_prometheus_hostname = "prometheus-ucabmjc"
+    condenser_ingress_prometheus_port = 9090
+    condenser_ingress_prometheus_protocol = "http"
   }
   
   timeouts {
@@ -124,6 +125,13 @@ resource "harvester_virtualmachine" "worker" {
 
   cloudinit {
     user_data_secret_name = harvester_cloudinit_secret.cloud-config.name
+  }
+
+  tags = {
+    condenser_ingress_isEnable = true
+    condenser_ingress_node_exporter_hostname = "${var.username}-node-exporter${format("%02d", count.index + 1)}"
+    condenser_ingress_node_exporter_port = 9100
+    condenser_ingress_node_exporter_protocol = "http"
   }
   timeouts {
     create = "20m"
