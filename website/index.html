@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Protein Pipeline Results</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Header / Banner -->
+    <header class="header">
+        <!-- Decorative banner image -->
+        <img src="images/banner.jpg" alt="Banner image" class="banner">
+
+        <div class="header-text">
+            <h1>Protein Analysis Results</h1>
+            <p>Summary of best hits and global profile statistics</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <button onclick="showSection('hits')">Best Hits</button>
+        <button onclick="showSection('profile')">Profile Summary</button>
+    </nav>
+
+    <!-- Main content -->
+    <main class="content">
+
+        <!-- Best hits section -->
+        <section id="hits-section" class="section">
+            <h2>Best Hit per Protein</h2>
+
+            <!-- Optional decorative image -->
+            <img src="images/logo.png" alt="Decorative image" class="section-image">
+
+            <table id="hits-table">
+                <thead>
+                    <tr>
+                        <th>Protein ID</th>
+                        <th>Best Hit</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- Profile section -->
+        <section id="profile-section" class="section hidden">
+            <h2>Overall Profile Statistics</h2>
+
+            <!-- Optional decorative image -->
+            <img src="images/background.jpg" alt="Decorative image" class="section-image">
+
+            <table id="profile-table">
+                <thead>
+                    <tr>
+                        <th>Average Standard Deviation</th>
+                        <th>Average Geometric Mean</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>Generated from distributed pipeline results</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
