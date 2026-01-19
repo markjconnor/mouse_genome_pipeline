@@ -2,13 +2,3 @@
   ansible.builtin.file:
     path: /home/almalinux/celery
     state: absent
-
-- name: Delete coursework directory if it exists
-  ansible.builtin.file:
-    path: /home/almalinux/coursework
-    state: absent
-
-- name: Delete results directory if it exists
-  ansible.builtin.file:
-    path: /home/almalinux/results
-    state: absent
