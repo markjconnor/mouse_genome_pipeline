@@ -1,5 +1,5 @@
 [Unit]
-Description=Node Exporter
+Description=Prometheus
 After=network.target
 
 [Service]
