@@ -67,8 +67,8 @@ def compute_profile_stats(records):
     gmeans = [r["gmean"] for r in records if not math.isnan(r["gmean"])]
 
     return {
-        "ave_std": round(mean(stds), 2),
-        "ave_gmean": round(mean(gmeans), 2),
+        "ave_std": mean(stds),
+        "ave_gmean": mean(gmeans),
     }
 
 def write_profile_csv(stats, path="/home/almalinux/results/profile_output.csv"):
