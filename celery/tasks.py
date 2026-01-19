@@ -5,10 +5,31 @@ import os
 import textwrap
 import glob
 import csv
+import shutil
+from billiard import current_process
 
 app = Celery('tasks')
 app.config_from_object('celeryconfig')
 
+successful_task_count = 0
+failed_task_count = 0
+
+def output_successful_task():
+    global successful_task_count
+    successful_task_count += 1
+    datum_name = 'task_count{id="'+str(current_process().index)+'"}'
+    with open(f'/home/almalinux/custom_metrics/successful_task_count_{current_process().index}.prom.tmp', 'w', encoding="utf-8") as fh:
+        fh.write(f'{datum_name} {successful_task_count}\n')
+    shutil.move(f'/home/almalinux/custom_metrics/successful_task_count_{current_process().index}.prom.tmp', f'/home/almalinux/custom_metrics/successful_task_count_{current_process().index}.prom')
+
+def output_failed_task():
+    global failed_task_count
+    failed_task_count += 1
+    datum_name = 'task_count{id="'+str(current_process().index)+'"}'
+    with open(f'/home/almalinux/custom_metrics/failed_task_count_{current_process().index}.prom.tmp', 'w', encoding="utf-8") as fh:
+        fh.write(f'{datum_name} {failed_task_count}\n')
+    shutil.move(f'/home/almalinux/custom_metrics/failed_task_count_{current_process().index}.prom.tmp', f'/home/almalinux/custom_metrics/failed_task_count_{current_process().index}.prom')
+    
 @app.task
 def run_pipeline_for_sequence(seq_id, sequence):
     """
@@ -43,9 +64,9 @@ def run_pipeline_for_sequence(seq_id, sequence):
         matches = glob.glob(pattern)
 
         if not matches:
+            output_failed_task()
             return {
                 "seq_id": seq_id,
-                "success": False,
                 "error": "Result file not found",
             }
 
@@ -58,6 +79,7 @@ def run_pipeline_for_sequence(seq_id, sequence):
                 row["seq_id"] = seq_id
                 rows.append(row)
 
+        output_successful_task()
         return {
             "seq_id": seq_id,
             "rows": rows,
