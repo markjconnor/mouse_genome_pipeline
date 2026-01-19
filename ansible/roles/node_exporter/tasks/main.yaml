@@ -11,11 +11,20 @@
     owner: root
     group: root
   become: true
-  
+
+- name: Create custom metrics directory
+  ansible.builtin.file:
+    path: /home/almalinux/custom_metrics
+    state: directory
+    owner: almalinux
+    group: almalinux
+    mode: '0755'
+  become: true
+
 - name: Start node exporter
   ansible.builtin.systemd:
     name: node_exporter
     enabled: true
-    state: started
+    state: restarted
     daemon_reload: true
   become: true
