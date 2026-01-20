@@ -1,77 +1,485 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>Protein Pipeline Results</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Genome Data Visualizer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url("images/background1.jpeg");
+            background-size: auto;        /* fills the screen */
+            background-position: center;   /* centers the image */
+            background-repeat: repeat;  /* prevents tiling */
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: rgb(131, 141, 187);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0.9;
+        }
+
+        .header::before {
+            content: '';/*'🐭';*/
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.2;
+            top: 5px;
+            left: 50px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .header::after {
+            content: '';/*'🐁';*/
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.2;
+            bottom: 5px;
+            right: 80px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #ffffff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+
+        }
+
+        .mouse-icon {
+            font-size: 1.2em;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: #000000;
+            box-shadow: 0 0 10px rgba(245, 87, 108, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        thead {
+            background:rgb(131, 141, 187);
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.3s;
+        }
+
+        tbody tr:hover {
+            background: #f9f9ff;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 10px 20px;
+            background: #000000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background: #38383a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .pagination button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .page-info {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-style: italic;
+        }
+    </style>
 </head>
-
 <body>
-
-    <!-- Header / Banner -->
-    <header class="header">
-        <!-- Decorative banner image -->
-        <img src="images/banner.jpg" alt="Banner image" class="banner">
-
-        <div class="header-text">
-            <h1>Protein Analysis Results</h1>
-            <p>Summary of best hits and global profile statistics</p>
+        <div class="header">
+            <h1>Mouse Genome Data Visualizer</h1>
+            <p class="subtitle">Exploring Genetic Hits and Profile Data</p>
         </div>
-    </header>
 
-    <!-- Navigation -->
-    <nav class="nav">
-        <button onclick="showSection('hits')">Best Hits</button>
-        <button onclick="showSection('profile')">Profile Summary</button>
-    </nav>
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="mouse-icon"></span>
+                    Protein Hits Data
+                </h2>
+                
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search by FASTA ID">
+                </div>
 
-    <!-- Main content -->
-    <main class="content">
+                <table id="hitsTable">
+                    <thead>
+                        <tr>
+                            <th>FASTA ID</th>
+                            <th>Best Hit ID</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hitsTableBody">
+                        <tr>
+                            <td colspan="2" class="no-data">Loading data...</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-        <!-- Best hits section -->
-        <section id="hits-section" class="section">
-            <h2>Best Hit per Protein</h2>
+                <div class="pagination">
+                    <button id="prevBtn" disabled>← Previous</button>
+                    <span class="page-info" id="pageInfo">Page 0 of 0</span>
+                    <button id="nextBtn" disabled>Next →</button>
+                </div>
+            </div>
 
-            <!-- Optional decorative image -->
-            <img src="images/logo.png" alt="Decorative image" class="section-image">
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="mouse-icon"></span>
+                    Profile Statistics
+                </h2>
 
-            <table id="hits-table">
-                <thead>
-                    <tr>
-                        <th>Protein ID</th>
-                        <th>Best Hit</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </section>
+                <table id="profileTable">
+                    <thead>
+                        <tr>
+                            <th>Average STD</th>
+                            <th>Average GMean</th>
+                        </tr>
+                    </thead>
+                    <tbody id="profileTableBody">
+                        <tr>
+                            <td colspan="2" class="no-data">Loading data...</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-        <!-- Profile section -->
-        <section id="profile-section" class="section hidden">
-            <h2>Overall Profile Statistics</h2>
+                <div class="chart-container">
+                    <canvas id="profileChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <!-- Optional decorative image -->
-            <img src="images/background.jpg" alt="Decorative image" class="section-image">
+    <script>
+        let hitsData = [];
+        let filteredHitsData = [];
+        let profileData = null;
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let chart = null;
 
-            <table id="profile-table">
-                <thead>
-                    <tr>
-                        <th>Average Standard Deviation</th>
-                        <th>Average Geometric Mean</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </section>
+        // Load CSV files on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            loadHitsData();
+            loadProfileData();
+        });
 
-    </main>
+        function loadHitsData() {
+            fetch('/home/almalinux/results/hits_output.csv')
+                .then(response => response.text())
+                .then(csvText => {
+                    Papa.parse(csvText, {
+                        header: true,
+                        skipEmptyLines: true,
+                        complete: function(results) {
+                            hitsData = results.data;
+                            filteredHitsData = hitsData;
+                            currentPage = 1;
+                            renderHitsTable();
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading hits_output.csv:', error);
+                    document.getElementById('hitsTableBody').innerHTML = 
+                        '<tr><td colspan="2" class="no-data">Error loading hits data</td></tr>';
+                });
+        }
 
-    <footer class="footer">
-        <p>Generated from distributed pipeline results</p>
-    </footer>
+        function loadProfileData() {
+            fetch('/home/almalinux/results/profile_output.csv')
+                .then(response => response.text())
+                .then(csvText => {
+                    Papa.parse(csvText, {
+                        header: true,
+                        skipEmptyLines: true,
+                        complete: function(results) {
+                            profileData = results.data[0];
+                            renderProfileData();
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading profile_output.csv:', error);
+                    document.getElementById('profileTableBody').innerHTML = 
+                        '<tr><td colspan="2" class="no-data">Error loading profile data</td></tr>';
+                });
+        }
 
-    <script src="script.js"></script>
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            if (searchTerm === '') {
+                filteredHitsData = hitsData;
+            } else {
+                filteredHitsData = hitsData.filter(row => 
+                    row.fasta_id && row.fasta_id.toLowerCase().includes(searchTerm)
+                );
+            }
+            currentPage = 1;
+            renderHitsTable();
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderHitsTable();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            const totalPages = Math.ceil(filteredHitsData.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderHitsTable();
+            }
+        });
+
+        function renderHitsTable() {
+            const tbody = document.getElementById('hitsTableBody');
+            const totalPages = Math.ceil(filteredHitsData.length / itemsPerPage);
+            
+            if (filteredHitsData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="2" class="no-data">No matching results found</td></tr>';
+                document.getElementById('pageInfo').textContent = 'Page 0 of 0';
+                document.getElementById('prevBtn').disabled = true;
+                document.getElementById('nextBtn').disabled = true;
+                return;
+            }
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredHitsData.length);
+            const pageData = filteredHitsData.slice(startIndex, endIndex);
+
+            tbody.innerHTML = pageData.map(row => `
+                <tr>
+                    <td>${row.fasta_id || ''}</td>
+                    <td>${row.best_hit_id || ''}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages;
+        }
+
+        function renderProfileData() {
+            const tbody = document.getElementById('profileTableBody');
+            
+            if (!profileData) {
+                return;
+            }
+
+            tbody.innerHTML = `
+                <tr>
+                    <td>${profileData.ave_std || ''}</td>
+                    <td>${profileData.ave_gmean || ''}</td>
+                </tr>
+            `;
+
+            renderChart();
+        }
+
+        function renderChart() {
+            if (!profileData) return;
+
+            const ctx = document.getElementById('profileChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Average STD', 'Average GMean'],
+                    datasets: [{
+                        label: 'Profile Statistics',
+                        data: [
+                            parseFloat(profileData.ave_std) || 0,
+                            parseFloat(profileData.ave_gmean) || 0
+                        ],
+                        backgroundColor: [
+                            'rgba(102, 126, 234, 0.7)',
+                            'rgba(245, 87, 108, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(102, 126, 234, 1)',
+                            'rgba(245, 87, 108, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Profile Data Visualization',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            },
+                            color: '#667eea'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#666'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#666',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </body>
-
 </html>
