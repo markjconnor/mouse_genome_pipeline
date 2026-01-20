@@ -75,7 +75,7 @@ resource "harvester_virtualmachine" "host" {
     condenser_ingress_prometheus_hostname = "prometheus-ucabmjc"
     condenser_ingress_prometheus_port = 9090
     condenser_ingress_prometheus_protocol = "http"
-    condenser_ingress_httpd_hostname = "website_ucabmjc"
+    condenser_ingress_httpd_hostname = "website-ucabmjc"
     condenser_ingress_httpd_port = 80
     condener_ingress_httpd_protocol = "http"
   }
