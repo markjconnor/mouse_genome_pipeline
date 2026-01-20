@@ -4,10 +4,10 @@
     state: latest
   become: true
 
-- name: Copy index.html
+- name: Copy website directory
   ansible.builtin.copy:
-    src: /home/almalinux/ds4eng-cw/website/index.html
-    dest: /var/www/html/index.html
+    src: /home/almalinux/ds4eng-cw/website/
+    dest: /var/www/html/
     owner: root
     group: root
     mode: '0644'
