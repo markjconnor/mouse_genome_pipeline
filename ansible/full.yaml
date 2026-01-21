@@ -1,7 +1,6 @@
 ---
 - hosts: all
   roles:
-  - tmp
   - common
 
 - hosts: host
@@ -9,6 +8,7 @@
   - host
   - redis
   - prometheus
+  - httpd
 
 - hosts: workers
   roles:
