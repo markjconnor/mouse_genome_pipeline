@@ -33,6 +33,11 @@
     src: /home/almalinux/ds4eng-cw/coursework/subset_fasta.py
     dest: /home/almalinux/subset_fasta.py
 
+- name: Copy test fasta
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/coursework/new_test.fa
+    dest: /home/almalinux/coursework/new_test.fa
+
 - name: Run script to create fasta file
   ansible.builtin.command:
     cmd: python3 /home/almalinux/subset_fasta.py /home/almalinux/experiment_ids.txt
