@@ -1,0 +1,2 @@
+- name: FLUSHALL command to clear all data
+  ansible.builtin.command: redis-cli FLUSHALL
