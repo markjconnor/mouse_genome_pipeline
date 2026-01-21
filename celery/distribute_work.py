@@ -4,6 +4,7 @@ import json
 from statistics import mean
 import math
 import csv
+import shutil
 
 
 def parse_fasta(path):
@@ -79,7 +80,7 @@ def write_profile_csv(stats, path="/home/almalinux/results/profile_output.csv"):
 
 
 if __name__ == "__main__":
-    fasta_file = "/home/almalinux/coursework/experiment_sequences.fasta"
+    fasta_file = "/home/almalinux/coursework/new_test.fa"
 
     entries = parse_fasta(fasta_file)
 
@@ -103,3 +104,7 @@ if __name__ == "__main__":
     profile_stats = compute_profile_stats(records)
     write_profile_csv(profile_stats)
 
+
+    # Move output files to web server directory
+    shutil.copy("/home/almalinux/results/hits_output.csv", "/var/www/html/data/hits_output.csv")
+    shutil.copy("/home/almalinux/results/profile_output.csv", "/var/www/html/data/profile_output.csv")
