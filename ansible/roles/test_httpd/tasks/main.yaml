@@ -1,0 +1,16 @@
+- name: Delete website files
+  ansible.builtin.file:
+    path: /var/www/html/
+    state: absent
+  become: true
+
+- name: Recreate the empty directory
+  ansible.builtin.file:
+    path: /var/www/html/
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
+  become: true
+  
+
