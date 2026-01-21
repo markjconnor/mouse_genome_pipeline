@@ -6,7 +6,6 @@
 
 # Coursework
 coursework/build_cluster/
-coursework/new_test.fa
 
 # Celery
 celery/dump.rdb
