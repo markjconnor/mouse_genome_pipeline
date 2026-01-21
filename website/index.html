@@ -233,7 +233,7 @@
 <body>
     <div class="header">
         <h1>Mouse Genome Data Visualizer</h1>
-        <p class="subtitle">Exploring Genetic Hits and Profile Data</p>
+        <p class="subtitle">COMP0235</p>
     </div>
 
     <div class="content">
@@ -310,7 +310,7 @@
         });
 
         function loadHitsData() {
-            fetch('/data/hits_output.csv?ts=' + Date.now())    /* prevent caching */
+            fetch('/data/results/hits_output.csv?ts=' + Date.now())    /* prevent caching */
                 .then(response => response.text())
                 .then(csvText => {
                     Papa.parse(csvText, {
@@ -332,7 +332,7 @@
         }
 
         function loadProfileData() {
-            fetch('/data/profile_output.csv?ts=' + Date.now())     /* prevent caching */
+            fetch('/data/results/profile_output.csv?ts=' + Date.now())     /* prevent caching */
                 .then(response => response.text())
                 .then(csvText => {
                     Papa.parse(csvText, {
