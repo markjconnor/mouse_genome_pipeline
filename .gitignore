@@ -12,4 +12,4 @@ celery/dump.rdb
 celery/__pycache__/
 
 # Ansible
-ansible/roles/tmp/tasks/main.yaml
+ansible/__pycache__/generate_inventory.cpython-39.pyc
