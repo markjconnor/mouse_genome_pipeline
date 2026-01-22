@@ -12,11 +12,6 @@
   become: true
   become_user: root
 
-- name: Copy celery code
-  ansible.builtin.copy:
-    src: /home/almalinux/ds4eng-cw/celery/
-    dest: /home/almalinux/celery
-
 - name: Make sure coursework directory exists
   ansible.builtin.file:
     path: /home/almalinux/coursework 
