@@ -5,10 +5,11 @@
 
 - hosts: host
   roles:
-  - host
-  - redis
-  - prometheus
-  - httpd
+  - host_fasta
+  - host_scripts
+  - host_redis
+  - host_prometheus
+  - host_httpd
 
 - hosts: workers
   roles:
