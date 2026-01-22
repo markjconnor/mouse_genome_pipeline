@@ -1,3 +1,9 @@
+- name: Ensure Celery directory exists
+  ansible.builtin.file:
+    path: /home/almalinux/celery
+    state: directory
+    mode: '0755'
+
 - name: Copy Celery task
   ansible.builtin.copy:
     src: /home/almalinux/ds4eng-cw/celery/tasks.py

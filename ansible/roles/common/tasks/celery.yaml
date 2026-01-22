@@ -10,9 +10,5 @@
     state: present
   become: true
 
-- name: Ensure Celery directory exists
-  ansible.builtin.file:
-    path: /home/almalinux/celery
-    state: directory
-    mode: '0755'
+
 
