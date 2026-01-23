@@ -72,10 +72,10 @@ resource "harvester_virtualmachine" "host" {
 
   tags = {
     condenser_ingress_isEnabled = true
-    condenser_ingress_prometheus_hostname = "prometheus-ucabmjc"
+    condenser_ingress_prometheus_hostname = "prometheus-${var.username}"
     condenser_ingress_prometheus_port = 9090
     condenser_ingress_prometheus_protocol = "http"
-    condenser_ingress_httpd_hostname = "website-ucabmjc"
+    condenser_ingress_httpd_hostname = "website-${var.username}"
     condenser_ingress_httpd_port = 80
     condener_ingress_httpd_protocol = "http"
   }
