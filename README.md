@@ -11,8 +11,6 @@ Ensure the following are installed on your **local machine**:
 - Terraform
 - An SSH key pair
 
----
-
 ## Infrastructure Setup (Terraform)
 
 1. Configure instance labels and variables in Terraform as required.
@@ -27,19 +25,16 @@ Ensure the following are installed on your **local machine**:
     scp -i ~/.ssh/<KEY_NAME> ~/.ssh/<KEY_NAME> almalinux@<HOST_IP>:/home/almalinux/.ssh/
     ```
 
----
-
 ## Host Machine Setup
 
-Run the following commands on the host machine:
+Install required tools and clone the repository:
 ```bash
 sudo dnf install -y git
+sudo dnf install -y 
 git clone GITLAB
 ```
 
 NOTE: You may require a username and password to access the remote Git repository
-
----
 
 ## Network Configuration
 1. Return to your local machine
@@ -49,8 +44,6 @@ NOTE: You may require a username and password to access the remote Git repositor
     ```
 3. Identify the IP addresses for the host node and worker nodes
 4. On the **host machine**, update the `ips.json` file with the correct IP addresses for the host and workers
-
----
 
 ## Configuration (Ansible)
 
@@ -64,6 +57,4 @@ NOTE: You may require a username and password to access the remote Git repositor
     ```
 
 This will setup the host and workers will all the directories and necessary dependencies.
-
----
 
