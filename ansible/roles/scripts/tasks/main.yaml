@@ -6,9 +6,8 @@
     owner: almalinux
     group: almalinux
 
-- name: Run script to create fasta file
-  ansible.builtin.command:
-    cmd: /home/almalinux/venv/bin/python3 /home/almalinux/coursework/subset_fasta.py /home/almalinux/coursework/experiment_ids.txt
-  args:
-    creates: /home/almalinux/coursework/experiment_sequences.fasta
+- name: Copy experiment sequences fasta file
+  ansible.builtin.copy:
+    src: /home/almalinux/ds4eng-cw/coursework/experiment_sequences.fasta
+    dest: /home/almalinux/coursework/experiment_sequences.fasta
   
