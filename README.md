@@ -15,7 +15,7 @@ Ensure the following are installed on your **local machine**:
 
 ## Infrastructure Setup (Terraform)
 
-1. Configure Terraform as required for the coursework environment.
+1. Configure instance labels and variables in Terraform as required.
 
 2. Provision the infrastructure:
    ```bash
@@ -32,10 +32,10 @@ Ensure the following are installed on your **local machine**:
 ## Host Machine Setup
 
 Run the following commands on the host machine:
-    ```bash
-    sudo dnf install -y git
-    git clone GITLAB
-    ```
+```bash
+sudo dnf install -y git
+git clone GITLAB
+```
 
 NOTE: You may require a username and password to access the remote Git repository
 
