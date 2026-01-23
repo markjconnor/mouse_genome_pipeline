@@ -8,9 +8,8 @@ NO non-standard library imports
 """
 
 FASTA_FILE = "/home/almalinux/ds4eng-cw/UP000000589_10090.fasta"
-ID_FILE = "/home/almalinux/ds4eng-cw/experiment_ids.txt"
+ID_FILE = "/home/almalinux/ds4eng-cw/coursework/experiment_ids.txt"
 OUTPUT_FASTA = "/home/almalinux/ds4eng-cw/coursework/experiment_sequences.fasta"
-
 
 def load_ids(id_file):
     """Load experiment IDs into a set for fast lookup"""
