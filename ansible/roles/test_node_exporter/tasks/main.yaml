@@ -1,0 +1,6 @@
+- name: Delete custom metrics directory
+  ansible.builtin.file:
+    path: /home/almalinux/custom_metrics
+    state: absent
+  become: true
+
