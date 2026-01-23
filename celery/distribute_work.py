@@ -80,7 +80,7 @@ def write_profile_csv(stats, path="/home/almalinux/results/profile_output.csv"):
 
 
 if __name__ == "__main__":
-    fasta_file = "/home/almalinux/coursework/experiment_sequences.fasta"
+    fasta_file = "/home/almalinux/ds4eng-cw/coursework/experiment_sequences.fasta"
 
     entries = parse_fasta(fasta_file)
 
