@@ -7,9 +7,9 @@ experiment_ids.txt
 NO non-standard library imports
 """
 
-FASTA_FILE = "/home/almalinux/UP000000589_10090.fasta"
-ID_FILE = "/home/almalinux/coursework/experiment_ids.txt"
-OUTPUT_FASTA = "/home/almalinux/coursework/experiment_sequences.fasta"
+FASTA_FILE = "/home/almalinux/ds4eng-cw/UP000000589_10090.fasta"
+ID_FILE = "/home/almalinux/ds4eng-cw/experiment_ids.txt"
+OUTPUT_FASTA = "/home/almalinux/ds4eng-cw/coursework/experiment_sequences.fasta"
 
 
 def load_ids(id_file):
