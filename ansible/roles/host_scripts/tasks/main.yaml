@@ -14,7 +14,7 @@
 
 - name: Run script to create fasta file
   ansible.builtin.command:
-    cmd: python3 /home/almalinux/subset_fasta.py /home/almalinux/experiment_ids.txt
+    cmd: python3 /home/almalinux/ds4eng-cw/coursework/subset_fasta.py /home/almalinux/experiment_ids.txt
   args:
     creates: /home/almalinux/ds4eng-cw/coursework/experiment_sequences.fasta
 
