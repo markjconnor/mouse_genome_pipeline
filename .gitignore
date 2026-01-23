@@ -13,3 +13,5 @@ celery/__pycache__/
 
 # Ansible
 ansible/__pycache__/generate_inventory.cpython-39.pyc
+UP000000589_10090.fasta
+experiment_sequences.fasta
