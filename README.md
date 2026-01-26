@@ -31,7 +31,7 @@ Install required tools and clone the repository:
 ```bash
 sudo dnf install -y git
 sudo dnf install -y 
-git clone GITLAB
+git clone https://gitlab2.ds4eng.condenser.arc.ucl.ac.uk/ucabmjc/ds4eng-cw.git
 ```
 
 NOTE: You may require a username and password to access the remote Git repository
