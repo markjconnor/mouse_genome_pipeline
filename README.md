@@ -30,7 +30,7 @@ Ensure the following are installed on your **local machine**:
 Install required tools and clone the repository:
 ```bash
 sudo dnf install -y git
-sudo dnf install -y 
+sudo dnf install -y ansible
 git clone https://gitlab2.ds4eng.condenser.arc.ucl.ac.uk/ucabmjc/ds4eng-cw.git
 ```
 
