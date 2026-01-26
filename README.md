@@ -81,3 +81,13 @@ The host distributes the computation across the worker nodes. Expected runtime i
     https://website-ucabmjc.comp0235.condenser.arc.ucl.ac.uk/
 - Pipeline monitoring:
     https://prometheus-ucabmjc.comp0235.condenser.arc.ucl.ac.uk/
+
+
+## Testing the Data Pipeline
+
+To test the data pipeline, you can run it with a custom FASTA file.
+
+- Open the `/celery/distribute_work.py` script.
+- Locate the `fasta_file` variable, which specifies the path to the input FASTA file.
+- Update this path to point to the FASTA file you want to test with.
+- Run the pipeline as usual; the updated FASTA file will be used as the input for the test run.
