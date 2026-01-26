@@ -58,3 +58,26 @@ NOTE: You may require a username and password to access the remote Git repositor
 
 This will setup the host and workers will all the directories and necessary dependencies.
 
+## Running the Data Pipeline and Viewing Results
+
+Once the infrastructure has been configured with Ansible, the data pipeline can be executed from the host machine.
+
+**Running the Pipeline:**
+
+1. SSH into the host machine
+2. Navigate to the Celery directory:
+    ```bash
+    cd ~/ds4eng-cw/celery
+    ```
+3. Start the distributed pipeline:
+    ```bash
+    python3 distribute_worker.py
+    ```
+The host distributes the computation across the worker nodes. Expected runtime is approximately 12 hours using 4 workers.
+
+**Viewing Results**
+
+- Pipeline results:
+    https://website-ucabmjc.comp0235.condenser.arc.ucl.ac.uk/
+- Pipeline monitoring:
+    https://prometheus-ucabmjc.comp0235.condenser.arc.ucl.ac.uk/
