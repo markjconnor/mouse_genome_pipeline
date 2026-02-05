@@ -1,6 +1,6 @@
-# COMP0235 Coursework – Data Pipeline
+# Mouse Genome Machine Learning Data Pipeline 
 
-This repository contains the infrastructure and configuration code for the COMP0235 coursework data pipeline. It uses **Terraform** to provision infrastructure and **Ansible** to configure the host and worker nodes.
+This repository contains the infrastructure and configuration code for a mouse genome machine learning data pipeline. It uses **Terraform** to provision infrastructure and **Ansible** to configure the host and worker nodes.
 
 ---
 
